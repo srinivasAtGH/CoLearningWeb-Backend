@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const UserModel = require("./User");
 
-var sequelize = new Sequelize("keepitsimple", "root", "Cybage@123", {
+var sequelize = new Sequelize("keepitsimple", "root", "password", {
   host: "localhost",
   dialect: "mysql",
   pool: {

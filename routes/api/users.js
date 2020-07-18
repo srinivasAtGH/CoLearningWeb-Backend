@@ -7,29 +7,12 @@ const crypto = require("crypto");
 
 var secret = require("../../config").secret;
 
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
-
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: "TakeItEasy API",
-      description: "desc",
-      contact: {
-        name: "Some name",
-      },
-      servers: ["http://localhost:3000"],
-    },
-  },
-  apis: ["users.js"],
-};
-const swaggerDocument = swaggerJsDoc(swaggerOptions);
-
-router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-
+  if (!username || !password) {
+    res.status(400).json({ message: "User name or password is missing" });
+    return;
+  }
   User.findOne({
     where: {
       username: username,
@@ -42,7 +25,8 @@ router.post("/login", (req, res) => {
           .pbkdf2Sync(password, user.salt, 10000, 512, "sha512")
           .toString("hex")
     ) {
-      res.send("User name or password is wrong");
+      res.status(404).json({ message: "User name or password is wrong" });
+      return;
     } else {
       var today = new Date();
       var exp = new Date(today);
@@ -56,22 +40,21 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.send(token);
+      res.json({ access_token: token });
     }
   });
 });
 
-/**
- * @swagger
- * /register:
- *  post:
- *      description: some description
- *      responses:
- *          '200':
- *              description: res descr *
- */
 router.post("/register", (req, res) => {
-  const { username, password, email } = req.body;
+  const {
+    username,
+    password,
+    email,
+    terms_and_conditions_checked,
+    need_mentoring,
+    available_to_mentor,
+    need_colearner,
+  } = req.body;
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = crypto
     .pbkdf2Sync(password, salt, 10000, 512, "sha512")
@@ -82,7 +65,14 @@ router.post("/register", (req, res) => {
     hash: hash,
     salt: salt,
     email: email,
-  }).then((result) => res.json(result));
+    isguide: available_to_mentor,
+    islearner: need_mentoring,
+    iscolearner: need_colearner,
+    termsandconditionsaccepted: terms_and_conditions_checked,
+    emailverified: true,
+  }).then((result) =>
+    res.json({ message: "User " + username + " was created successfully" })
+  );
 });
 
 router.get("/users", auth, (req, res) => {
@@ -90,7 +80,12 @@ router.get("/users", auth, (req, res) => {
 });
 
 router.get("/users/:id", auth, (req, res) => {
-  User.findOne({ where: { id: req.params.id } }).then((user) => res.json(user));
+  User.findOne({ where: { id: req.params.id } }).then((user) => {
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist." });
+    }
+    res.json(user);
+  });
 });
 
 router.put("/users/:id", auth, (req, res) => {

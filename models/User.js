@@ -1,15 +1,46 @@
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define("User", {
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
+    Id: {
+      field: "userid",
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    username: {
+      field: "username",
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Username is required",
+        },
+        len: {
+          args: [6, 15],
+          msg: "Username must be between 6 and 15 characters",
+        },
+      },
+    },
+    email: {
+      field: "email",
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Email is required",
+        },
+        isEmail: { args: true, msg: "Email is not valid" },
+      },
+    },
     hash: { type: DataTypes.TEXT },
     salt: DataTypes.STRING(1000),
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
     country: DataTypes.STRING,
     state: DataTypes.STRING,
-    citty: DataTypes.STRING,
-    emai: DataTypes.STRING,
+    city: DataTypes.STRING,
+    email: DataTypes.STRING,
     emaiprivacy: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

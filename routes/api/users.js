@@ -46,33 +46,35 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-  const {
-    username,
-    password,
-    email,
-    terms_and_conditions_checked,
-    need_mentoring,
-    available_to_mentor,
-    need_colearner,
-  } = req.body;
+  const newUser = req.body;
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = crypto
-    .pbkdf2Sync(password, salt, 10000, 512, "sha512")
+    .pbkdf2Sync(newUser.password, salt, 10000, 512, "sha512")
     .toString("hex");
 
   User.create({
-    username: username,
+    username: newUser.username,
     hash: hash,
     salt: salt,
-    email: email,
-    isguide: available_to_mentor,
-    islearner: need_mentoring,
-    iscolearner: need_colearner,
-    termsandconditionsaccepted: terms_and_conditions_checked,
+    email: newUser.email,
+    isguide: newUser.available_to_mentor,
+    islearner: newUser.need_mentoring,
+    iscolearner: newUser.need_colearner,
+    termsandconditionsaccepted: newUser.terms_and_conditions_checked,
     emailverified: true,
-  }).then((result) =>
-    res.json({ message: "User " + username + " was created successfully" })
-  );
+  })
+    .then((user) => {
+      res.json({
+        message: "User " + user.username + " was created successfully",
+      });
+    })
+    .error((response) => {
+      res.json({
+        message: response.errors.map((error) => {
+          return error.message;
+        }),
+      });
+    });
 });
 
 router.get("/users", auth, (req, res) => {
@@ -80,7 +82,7 @@ router.get("/users", auth, (req, res) => {
 });
 
 router.get("/users/:id", auth, (req, res) => {
-  User.findOne({ where: { id: req.params.id } }).then((user) => {
+  User.findOne({ where: { userid: req.params.id } }).then((user) => {
     if (!user) {
       return res.status(404).json({ message: "User does not exist." });
     }
@@ -90,8 +92,16 @@ router.get("/users/:id", auth, (req, res) => {
 
 router.put("/users/:id", auth, (req, res) => {
   const updatedUser = req.body;
-  User.findOne({ where: { id: req.params.id } }).then((user) => {
-    user.Countryid = updatedUser.Countryid;
+  User.findOne({ where: { userid: req.params.id } }).then((user) => {
+    if (updatedUser.bio !== undefined) {
+      user.bio = updatedUser.bio;
+    }
+
+    if (updatedUser.phonenumber !== undefined) {
+      user.phonenumber = updatedUser.phonenumber;
+    }
+
+    // Todo: For all other editable fields
     user.save().then((user) => res.json(user));
   });
 });

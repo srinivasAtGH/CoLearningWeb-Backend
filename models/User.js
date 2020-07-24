@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define("User", {
     Id: {
-      field: "userid",
+      field: "id",
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -65,9 +65,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     birthdate: DataTypes.DATE,
     gender: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.ENUM("male", "female"),
       allowNull: false,
-      defaultValue: true,
     },
     occupation: DataTypes.STRING,
     photo: DataTypes.STRING,

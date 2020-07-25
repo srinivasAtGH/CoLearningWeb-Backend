@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "bdeb2b02-eeab-4b85-afd3-4761b00feffe",
+		"name": "LearningWeb",
+		"description": "Testing the Learning Web API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Learning Connection Request",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZmIzYjlkMWI4YTFmNGFiODVhMzQxNiIsInVzZXJuYW1lIjoidmlwdWxzczEiLCJleHAiOjE1OTg3MTk0MzUsImlhdCI6MTU5MzUzNTQzNX0.Ow3oO4e5NyZRKM2c__o4fs35oLlNcV9VdZEQEwy7PJg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"request\":\n  {\n    \"userId\": 1,\n    \"partnerId\": 2,\n    \"skillId\": 1,\n    \"skillFluency\": 4,\n    \"timeCommitment\": \"4 hours per week\",\n    \"personalNoteRequest\": \"blab blah blah\",\n    \"actionUserId\": 1,\n    \"connectionType\": 1    \n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/learningconnection",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"learningconnection"
+					],
+					"query": [
+						{
+							"key": "payload",
+							"value": "{\n  \"name\": \"vipul\",\n  \"username\": \"vipulss\",\n  \"password\": \"password@20\",\n  \"email\": \"vipulss@gmail.com\",\n  \"terms_and_conditions_checked\": true,\n  \"need_mentoring\": true,\n  \"available_to_mentor\": true\n}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"srinivasula\",\r\n    \"password\": \"srini@2020\",\r\n    \"email\": \"srini@gmail.com\",\r\n    \"available_to_mentor\": 1,\r\n    \"need_mentoring\": 1,\r\n    \"need_colearner\": 0,\r\n    \"terms_and_conditions_checked\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

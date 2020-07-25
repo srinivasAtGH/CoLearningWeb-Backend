@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define("User", {
     Id: {
-      field: "userid",
+      field: "id",
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     city: DataTypes.STRING,
     email: DataTypes.STRING,
-    emaiprivacy: {
+    emailprivacy: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     birthdate: DataTypes.DATE,
     gender: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: true,
     },
@@ -87,12 +87,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false,
     },
-    termsandconditionsaccepted: {
+    istermsandconditionschecked: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    emailverified: {
+    isemailverified: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

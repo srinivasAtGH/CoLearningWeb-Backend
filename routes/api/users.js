@@ -60,7 +60,7 @@ router.post("/register", (req, res) => {
     isguide: newUser.available_to_mentor,
     islearner: newUser.need_mentoring,
     iscolearner: newUser.need_colearner,
-    termsandconditionsaccepted: newUser.terms_and_conditions_checked,
+    istermsandconditionschecked: newUser.terms_and_conditions_checked,
     emailverified: true,
   })
     .then((user) => {

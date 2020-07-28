@@ -105,8 +105,8 @@ router.post("/register", (req, res) => {
         message: "User " + user.username + " was created successfully",
       });
     })
-    .error((response) => {
-      res.json({
+    .catch((response) => {
+      res.status(422).json({
         message: response.errors.map((error) => {
           return error.message;
         }),
@@ -135,6 +135,33 @@ router.get("/users/:id", auth, (req, res) => {
 
     res.json(user);
   });
+});
+
+router.put("/changepassword", auth, (req, res) => {
+  User.findOne({
+    where: {
+      username: req.body.username,
+    },
+  }).then(function (user) {
+    if (
+      !user ||
+      user.hash !==
+        crypto
+          .pbkdf2Sync(
+            req.body.username.oldpassword,
+            user.salt,
+            10000,
+            512,
+            "sha512"
+          )
+          .toString("hex")
+    ) {
+      res.status(404).json({ message: "password is wrong" });
+      return;
+    }
+  });
+
+  res.json(user);
 });
 
 router.put("/users/:id", auth, (req, res) => {

@@ -1,16 +1,18 @@
 const express = require("express");
+var cors = require("cors");
+
 const app = express();
 
 const bodyparser = require("body-parser");
 const crypto = require("crypto");
 
 app.use(bodyparser.json());
-
+app.use(cors());
 var users = require("./routes/api/users.js");
 
 //app.use(require("./routes"));
 app.use(users);
 
-app.listen(3000, () => {
-  console.log("Server listening at 3000 ...");
+app.listen(3100, () => {
+  console.log("Server listening at 3100 ...");
 });

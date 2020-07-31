@@ -10,7 +10,7 @@ var secret = require("../../config").secret;
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    res.status(400).json({ message: "User name or password is missing" });
+    res.json({ errors: ["User name or password is missing"] });
     return;
   }
   User.findOne({
@@ -25,7 +25,7 @@ router.post("/login", (req, res) => {
           .pbkdf2Sync(password, user.salt, 10000, 512, "sha512")
           .toString("hex")
     ) {
-      res.status(404).json({ message: "User name or password is wrong" });
+      res.json({ errors: ["User name or password is wrong"] });
       return;
     } else {
       var today = new Date();
@@ -101,13 +101,14 @@ router.post("/register", (req, res) => {
         });
       }
 
-      res.json({
+      return res.json({
+        status: "success",
         message: "User " + user.username + " was created successfully",
       });
     })
     .catch((response) => {
       res.status(422).json({
-        message: response.errors.map((error) => {
+        errors: response.errors.map((error) => {
           return error.message;
         }),
       });

@@ -28,13 +28,12 @@ const swaggerDocument = swaggerJsDoc(swaggerOptions);
 
 router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-router.post("/learningconnection", (req, res) => {
+router.post("/learningconnection", auth, (req, res) => {
    
     let payload = req.body;
 
-    learningConnectionService.createLearningConnectionRequest(payload, (err, learningConnection) => {
+    learningConnectionService.createLearningConnectionRequest(payload, req.user, (err, learningConnection) => {
         // TODO: Better error response
-        console.log("inside callback");
         if (err) 
         {
           console.log(err);
@@ -45,8 +44,24 @@ router.post("/learningconnection", (req, res) => {
   });
 });
 
+router.get("/learningconnections", auth, (req, res) => {
+
+    learningConnectionService.getLearningConnections(req.user, (err, learningConnections) => {
+    // TODO: Better error response
+    console.log("inside callback");
+    if (err) 
+    {
+      console.log(err);
+      return res.sendStatus(422);
+    }
+    if (!learningConnections) return res.sendStatus(422);
+    return res.json(learningConnections);
+});
+
+});
+
 function constructLearningConnectionResponse(learningConnection) {
-    console.log("inside constructUserResponse1");
+
     let connection = { learningConnection: learningConnection.toJSON() };
     return connection;
   }

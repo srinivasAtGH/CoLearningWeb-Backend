@@ -32,10 +32,12 @@ router.post("/login", (req, res) => {
       var exp = new Date(today);
       exp.setDate(today.getDate() + 60);
 
+      console.log("id:" + user.Id);
+      console.log("username:" + user.username);
       const token = jwt.sign(
         {
-          id: this._id,
-          username: this.username,
+          id: user.Id,
+          username: user.username,
           exp: parseInt(exp.getTime() / 1000),
         },
         secret

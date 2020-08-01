@@ -40,7 +40,7 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.json({ access_token: token });
+      res.json({ user: {access_token: token, username: user.username}});
     }
   });
 });

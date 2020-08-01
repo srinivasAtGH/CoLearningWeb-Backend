@@ -10,7 +10,14 @@
 			"name": "Create Learning Connection Request",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [
@@ -33,7 +40,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"request\":\n  {\n    \"userId\": 1,\n    \"partnerId\": 2,\n    \"skillId\": 1,\n    \"skillFluency\": 4,\n    \"timeCommitment\": \"4 hours per week\",\n    \"personalNoteRequest\": \"blab blah blah\",\n    \"actionUserId\": 1,\n    \"connectionType\": 1    \n  }\n}",
+					"raw": "{\n  \"request\":\n  {\n    \"userId\": 1,\n    \"partnerId\": 2,\n    \"skillId\": 1,\n    \"skillFluency\": 4,\n    \"timeCommitment\": \"4 hours per week\",\n    \"personalNoteRequest\": \"blab blah blah\",\n    \"connectionType\": 1\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,7 +79,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"srinivasula\",\r\n    \"password\": \"srini@2020\",\r\n    \"email\": \"srini@gmail.com\",\r\n    \"available_to_mentor\": 1,\r\n    \"need_mentoring\": 1,\r\n    \"need_colearner\": 0,\r\n    \"terms_and_conditions_checked\": 1\r\n}",
+					"raw": "{\r\n    \"username\": \"nileshd\",\r\n    \"password\": \"nileshdy@2020\",\r\n    \"email\": \"nileshd@gmail.com\",\r\n    \"available_to_mentor\": 1,\r\n    \"need_mentoring\": 1,\r\n    \"need_colearner\": 0,\r\n    \"terms_and_conditions_checked\": 1,\r\n    \"skill_to_learn\": \"python\",\r\n    \"skill_to_guide\": \"C#\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,6 +100,71 @@
 						"api",
 						"register"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Learning Collections",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"pbgurav\",\r\n    \"password\": \"pbgurav@2020\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

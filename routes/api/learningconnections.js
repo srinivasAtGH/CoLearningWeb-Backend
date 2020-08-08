@@ -4,31 +4,11 @@ var { LearningConnection } = require("../../models/sequelize");
 
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-
 var secret = require("../../config").secret;
 
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 const learningConnectionService = require("../../services/learningconnections.js");
 
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: "TakeItEasy API",
-      description: "desc",
-      contact: {
-        name: "Some name",
-      },
-      servers: ["http://localhost:3000"],
-    },
-  },
-  apis: ["users.js"],
-};
-const swaggerDocument = swaggerJsDoc(swaggerOptions);
-
-router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-router.post("/learningconnection", auth, (req, res) => {
+router.post("/learning_connection/send_request", auth, (req, res) => {
    
     let payload = req.body;
 
@@ -44,7 +24,7 @@ router.post("/learningconnection", auth, (req, res) => {
   });
 });
 
-router.get("/learningconnections", auth, (req, res) => {
+router.get("/learning_connections", auth, (req, res) => {
 
     learningConnectionService.getLearningConnections(req.user, (err, learningConnections) => {
     // TODO: Better error response

@@ -33,7 +33,7 @@ module.exports = {
             type: Sequelize.DATE,
         },
         connectionStatus: {
-            type: Sequelize.TINYINT, //0 - Pending, 1 - Accepted, 2 - Rejected
+            type: DataTypes.ENUM("pending", "accepted", "rejected"),
         },
         acceptanceRejectionDate: {
             type: Sequelize.DATE,
@@ -45,7 +45,7 @@ module.exports = {
             type: Sequelize.INTEGER,
         },
         connectionType: {
-            type: Sequelize.TINYINT, //1-learner //2-co-learner
+            type: DataTypes.ENUM("learner", "colearner"),
         },
         createdAt: {
             type: Sequelize.DATE

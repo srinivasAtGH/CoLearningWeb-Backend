@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes, User, Skill) => {
-  var UserSkills = sequelize.define("userSkills", {
+  var UserSkills = sequelize.define("UserSkills", {
     Id: {
       field: "id",
       type: DataTypes.INTEGER,
@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes, User, Skill) => {
       autoIncrement: true,
     },
     skilltype: DataTypes.ENUM("guide", "learner"),
+    userId: DataTypes.INTEGER,
+    skillId: DataTypes.INTEGER,
   });
   return UserSkills;
 };

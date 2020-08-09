@@ -1,0 +1,769 @@
+swagger: '2.0'
+basePath: /api
+paths:
+  /login:
+    post:
+      responses:
+        '200':
+          description: Successful login
+          schema:
+            $ref: '#/definitions/Login response data model'
+      summary: Login user
+      description: |-
+        The user can login with username + password.
+        The return value is an access token and the expiry timestamp.
+        The token is valid for 1 week.
+      operationId: login
+      parameters:
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/Login request data model'
+      tags:
+        - Users
+  /learning_connection/send_request:
+    post:
+      responses:
+        '200':
+          description: Learning Connection request was sent successfully.
+        '400':
+          description: Validation error.
+      summary: Creates a new learning connection request
+      operationId: send_request
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/Send learning connection request model'
+      tags:
+        - Learning Connection
+  '/learning_connection/{request_id}':
+    parameters:
+      - name: request_id
+        in: path
+        required: true
+        type: integer
+    delete:
+      responses:
+        '200':
+          description: Deleted learning connection request with success.
+      summary: Delete a learning connection request
+      operationId: delete_learning_connection
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Learning Connection
+  '/learning_connection/{request_id}/accept':
+    parameters:
+      - name: request_id
+        in: path
+        required: true
+        type: integer
+    put:
+      responses:
+        '200':
+          description: Accept learning connection with success.
+      summary: Accept a learning connection
+      operationId: accept_mentorship_relation
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Learning Connection
+  '/learning_connection/{request_id}/cancel':
+    parameters:
+      - name: request_id
+        in: path
+        required: true
+        type: integer
+    put:
+      responses:
+        '200':
+          description: Cancelled learning connection with success.
+      summary: Cancel a learning connection
+      operationId: cancel_learning_connection
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Learning Connection
+  '/learning_connection/{request_id}/reject':
+    parameters:
+      - name: request_id
+        in: path
+        required: true
+        type: integer
+    put:
+      responses:
+        '200':
+          description: Rejected learning connection with success.
+      summary: Reject a learning connection
+      operationId: reject_learning_connection
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Learning Connection
+  /learning_connections:
+    get:
+      responses:
+        '200':
+          description: Successfully return current user's learning connections.
+          schema:
+            $ref: '#/definitions/List learning connection request model'
+      summary: Lists all learning connections of current user
+      operationId: get_all_user_learning_connections
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Learning Connection
+  /learning_connections/current:
+    get:
+      responses:
+        '200':
+          description: Successfully return current user's current learning connections.
+          schema:
+            $ref: '#/definitions/List learning connection request model'
+      summary: Lists  of the current user
+      operationId: get_current_learning_connections
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Learning Connection
+  /learning_connections/pending:
+    get:
+      responses:
+        '200':
+          description: Returned pending learning conenction with success.
+          schema:
+            $ref: '#/definitions/List learning connection request model'
+      summary: Lists pending learning connections of the current user
+      operationId: get_pending_learning_connections
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags: 
+        - Learning Connection
+  '/learning_connections/{learning_connection_id}':
+    get:
+      responses:
+        '200':
+          description: Successfully return details of a learning connection.
+          schema:
+            $ref: '#/definitions/List learning connection request model'
+      summary: Get details of a learning connection
+      operationId: get_learning_connection_details
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Learning Connection
+  /register:
+    post:
+      responses:
+        '201':
+          description: User successfully created.
+      summary: Creates a new user
+      operationId: create_user
+      parameters:
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/User registration model'
+      tags:
+        - Users
+  /user:
+    get:
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/User Complete model used in listing'
+        '404':
+          description: User not found.
+      summary: Returns a user
+      operationId: get_user
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Users
+    delete:
+      responses:
+        '200':
+          description: User successfully deleted.
+        '404':
+          description: User not found.
+      summary: Deletes user
+      operationId: delete_user
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Users
+    put:
+      responses:
+        '200':
+          description: User successfully updated.
+        '404':
+          description: User not found.
+      summary: Updates user profile
+      operationId: update_user_profile
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/Update User request data model'
+      tags:
+        - Users
+  /user/change_password:
+    put:
+      responses:
+        '200':
+          description: Success
+      summary: Updates the user's password
+      operationId: update_user_password
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/Change password request data model'
+      tags:
+        - Users
+  '/user/confirm_email/{token}':
+    parameters:
+      - in: path
+        description: Token sent to the user's email
+        name: token
+        required: true
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_user_email_confirmation
+      tags:
+        - Users
+  /user/resend_email:
+    post:
+      responses:
+        '200':
+          description: Success
+      operationId: post_user_resend_email_confirmation
+      parameters:
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/Resend email request data model'
+      tags:
+        - Users
+  /users:
+    get:
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User list model'
+      summary: Returns list of all the users
+      operationId: list_users
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Users
+  /users/verified:
+    get:
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User list model'
+      summary: Returns all verified users
+      operationId: get_verified_users
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Users
+  '/users/{user_id}':
+    parameters:
+      - in: path
+        description: The user identifier
+        name: user_id
+        required: true
+        type: integer
+    get:
+      responses:
+        '201':
+          description: Success.
+          schema:
+            $ref: '#/definitions/User list model'
+        '400':
+          description: User id is not valid.
+        '404':
+          description: User does not exist.
+      summary: Returns a user
+      operationId: get_user
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: 'Authentication access token. E.g.: Bearer <access_token>'
+      tags:
+        - Users
+info:
+  title: CoLearning Web API
+  version: '1.0'
+  description: API documentation for the backend of CoLearning Web System
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: default
+    description: Default namespace
+  - name: Users
+    description: Operations related to users
+  - name: Admins
+    description: Operations related to Admin users
+  - name: Learning Connection
+    description: Operations related to mentorship relations between users
+definitions:
+  User list model:
+    required:
+      - available_to_mentor
+      - bio
+      - interests
+      - location
+      - name
+      - need_mentoring
+      - occupation
+      - organization
+      - skills
+      - slack_username
+      - username
+    properties:
+      id:
+        type: integer
+        description: The unique identifier of a user
+      username:
+        type: string
+        description: User username
+      name:
+        type: string
+        description: User name
+      slack_username:
+        type: string
+        description: User Slack username
+      bio:
+        type: string
+        description: User bio
+      location:
+        type: string
+        description: User location
+      occupation:
+        type: string
+        description: User occupation
+      organization:
+        type: string
+        description: User organization
+      interests:
+        type: string
+        description: User interests
+      skills:
+        type: string
+        description: User skills
+      need_mentoring:
+        type: boolean
+        description: User need to be mentored indication
+      available_to_mentor:
+        type: boolean
+        description: User availability to mentor indication
+    type: object
+  Update User request data model:
+    properties:
+      name:
+        type: string
+        description: User name
+      username:
+        type: string
+        description: User username
+      bio:
+        type: string
+        description: User bio
+      location:
+        type: string
+        description: User location
+      occupation:
+        type: string
+        description: User occupation
+      organization:
+        type: string
+        description: User organization
+      slack_username:
+        type: string
+        description: User slack username
+      social_media_links:
+        type: string
+        description: User social media links
+      skills:
+        type: string
+        description: User skills
+      interests:
+        type: string
+        description: User interests
+      resume_url:
+        type: string
+        description: User resume url
+      photo_url:
+        type: string
+        description: User photo url
+      need_mentoring:
+        type: boolean
+        description: User need mentoring indication
+      available_to_mentor:
+        type: boolean
+        description: User availability to mentor indication
+    type: object
+  User Complete model used in listing:
+    required:
+      - email
+      - is_admin
+      - is_email_verified
+      - name
+      - password_hash
+      - registration_date
+      - terms_and_conditions_checked
+      - username
+    properties:
+      id:
+        type: integer
+        description: The unique identifier of a user
+      name:
+        type: string
+        description: User name
+      username:
+        type: string
+        description: User username
+      email:
+        type: string
+        description: User email
+      password_hash:
+        type: string
+        description: User password hash
+      terms_and_conditions_checked:
+        type: boolean
+        description: User Terms and Conditions check state
+      is_admin:
+        type: boolean
+        description: User admin status
+      registration_date:
+        type: float
+        description: User registration date
+      is_email_verified:
+        type: boolean
+        description: User email verification status
+      email_verification_date:
+        type: string
+        format: date-time
+        description: User email verification date
+      bio:
+        type: string
+        description: User bio
+      location:
+        type: string
+        description: User location
+      occupation:
+        type: string
+        description: User occupation
+      organization:
+        type: string
+        description: User organization
+      slack_username:
+        type: string
+        description: User slack username
+      social_media_links:
+        type: string
+        description: User social media links
+      skills:
+        type: string
+        description: User skills
+      interests:
+        type: string
+        description: User interests
+      resume_url:
+        type: string
+        description: User resume url
+      photo_url:
+        type: string
+        description: User photo url
+      need_mentoring:
+        type: boolean
+        description: User need mentoring indication
+      available_to_mentor:
+        type: boolean
+        description: User availability to mentor indication
+      current_mentorship_role:
+        type: integer
+        description: User current role
+      membership_status:
+        type: integer
+        description: User membershipstatus
+    type: object
+  Change password request data model:
+    required:
+      - current_password
+      - new_password
+    properties:
+      current_password:
+        type: string
+        description: User's current password
+      new_password:
+        type: string
+        description: User's new password
+    type: object
+  User registration model:
+    required:
+      - email
+      - name
+      - password
+      - terms_and_conditions_checked
+      - username
+    properties:
+      name:
+        type: string
+        description: User name
+      username:
+        type: string
+        description: User username
+      password:
+        type: string
+        description: User password
+      email:
+        type: string
+        description: User email
+      terms_and_conditions_checked:
+        type: boolean
+        description: User check Terms and Conditions value
+    type: object
+  Resend email request data model:
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        description: User's email
+    type: object
+  Login request data model:
+    required:
+      - password
+      - username
+    properties:
+      username:
+        type: string
+        description: User's username
+      password:
+        type: string
+        description: User's password
+    type: object
+  Login response data model:
+    required:
+      - access_token
+      - expiry
+    properties:
+      access_token:
+        type: string
+        description: User's access token
+      expiry:
+        type: number
+        description: Access token expiry UNIX timestamp
+    type: object
+  Assign User model:
+    required:
+      - user_id
+    properties:
+      user_id:
+        type: integer
+        description: The unique identifier of a user
+    type: object
+  Send learning connection request model:
+    required:
+      - userId
+      - partnerId
+      - skillId
+      - skillFluency
+      - timeCommitment
+      - personalNoteRequest
+      - connectionType
+    properties:
+      userId:
+        type: integer
+        description: Learning Connection User ID (Learner)
+      partnerId:
+        type: integer
+        description: Learning Connection Partner ID (Mentor)
+      skillId:
+        type: integer
+        description: Learner Skill Id for which connection request raised
+      skillFluency:
+        type: integer
+        description: Skill Fluency of Learner on a scale of 1 to 10
+      timeCommitment:
+        type: string
+        description: Time learner can commit for learning
+      personalNoteRequest:
+        type: string
+        description: Note sent to mentor by learner
+      connectionType:
+        type: integer
+        description: 1 - learner,  2- colearner
+    type: object
+  List learning connection request model:
+    required:
+      - accept_date
+      - action_user_id
+      - creation_date
+      - id
+      - notes
+      - state
+    properties:
+      id:
+        type: integer
+        description: Learning Connection ID
+      action_user_id:
+        type: integer
+        description: Learning Connection requester user ID
+      mentor:
+        $ref: '#/definitions/User'
+      mentee:
+        $ref: '#/definitions/User'
+      creation_date:
+        type: number
+        description: Learning Connection creation date in UNIX timestamp format
+      accept_date:
+        type: number
+        description: Learning Connection acceptance date in UNIX timestamp format
+      state:
+        type: string
+        description: Learning Connection state
+      notesrequest:
+        type: string
+        description: Learning Connection request notes
+      notesresponse:
+        type: string
+        description: Learning Connection response notes
+      skillname:
+        type: string
+        description: Learner Skill name
+    type: object
+responses:
+  ParseError:
+    description: When a mask can't be parsed
+  MaskError:
+    description: When any error occurs on mask
+  NoAuthorizationError: {}
+  CSRFError: {}
+  ExpiredSignatureError: {}
+  InvalidHeaderError: {}
+  InvalidTokenError: {}
+  JWTDecodeError: {}
+  WrongTokenError: {}
+  RevokedTokenError: {}
+  FreshTokenRequired: {}
+  UserLoadError: {}
+  UserClaimsVerificationError: {}

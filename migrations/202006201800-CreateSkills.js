@@ -8,9 +8,15 @@ module.exports = {
             type: Sequelize.INTEGER,
             autoIncrement: true
         },
-        name: {
+        skillname: {
             allowNull: false,
             type: Sequelize.STRING
+        },
+        createdAt: {
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          type: Sequelize.DATE
         },
       })
     },

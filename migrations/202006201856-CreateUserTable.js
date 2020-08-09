@@ -106,7 +106,7 @@ module.exports = {
         type: Sequelize.DATE        
       },
       gender: {
-        type: Sequelize.TINYINT //gender : '1':M, '2':F,'3':T
+        type: Sequelize.ENUM("male", "female"),
       },
       occupation: {
         type: Sequelize.STRING,
@@ -178,6 +178,12 @@ module.exports = {
           allowNull: false,
           defaultValue: '1' //'1': Skill to Learn, '2': Skill to Mentor,
         },
+        createdAt: {
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          type: Sequelize.DATE
+        },
     }).then(function() {
         queryInterface.createTable('UserLanguages', {
             id: {
@@ -193,6 +199,12 @@ module.exports = {
             skillId: {
                 type: Sequelize.INTEGER,
                 references: { model: 'Languages', key: 'id' }
+            },
+            createdAt: {
+              type: Sequelize.DATE
+            },
+            updatedAt: {
+              type: Sequelize.DATE
             },
         })
   });

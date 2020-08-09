@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 node_modules
+=======
+/node_modules/
+/logs/
+/db/
+package-lock.json
+
+>>>>>>> e703c54340118d4f79ddff70c3c3db6375cbaf4e

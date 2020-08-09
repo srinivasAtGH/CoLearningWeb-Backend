@@ -65,9 +65,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     birthdate: DataTypes.DATE,
     gender: {
-      type: DataTypes.TINYINT,
-      allowNull: false,
-      defaultValue: true,
+      type: DataTypes.ENUM("male", "female"),
+      allowNull: true,
     },
     occupation: DataTypes.STRING,
     photo: DataTypes.STRING,

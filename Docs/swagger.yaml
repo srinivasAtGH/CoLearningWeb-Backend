@@ -139,51 +139,20 @@ paths:
           type: string
           required: true
           description: 'Authentication access token. E.g.: Bearer <access_token>'
-        - name: X-Fields
-          in: header
-          type: string
-          format: mask
-          description: An optional fields mask
+        - name: status
+          in: query
+          required: false
+          description: status values of the learning connection to be considered for filter
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "pending"
+            - "accepted"
+            - "rejected"
+            default: "pending"
+          collectionFormat: "multi"
       tags:
-        - Learning Connection
-  /learning_connections/current:
-    get:
-      responses:
-        '200':
-          description: Successfully return current user's current learning connections.
-          schema:
-            $ref: '#/definitions/List learning connection request model'
-      summary: Lists  of the current user
-      operationId: get_current_learning_connections
-      parameters:
-        - name: Authorization
-          in: header
-          type: string
-          required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
-      tags:
-        - Learning Connection
-  /learning_connections/pending:
-    get:
-      responses:
-        '200':
-          description: Returned pending learning conenction with success.
-          schema:
-            $ref: '#/definitions/List learning connection request model'
-      summary: Lists pending learning connections of the current user
-      operationId: get_pending_learning_connections
-      parameters:
-        - name: Authorization
-          in: header
-          type: string
-          required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
-        - name: X-Fields
-          in: header
-          type: string
-          format: mask
-          description: An optional fields mask
-      tags: 
         - Learning Connection
   '/learning_connections/{learning_connection_id}':
     get:

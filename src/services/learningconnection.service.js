@@ -1,7 +1,6 @@
 "use strict";
 var { LearningConnection, User, UserSkills, Skill} = require("../../models/sequelize"); 
-//const UserSkills = require("../../models/UserSkills");
-//const Skill = require("../../models/Skill");
+var util = require("util");
 
 const createLearningConnectionRequest = async (user, payload) => {
     try
@@ -27,10 +26,19 @@ const createLearningConnectionRequest = async (user, payload) => {
     } 
 }
 
-const getLearningConnections = async (user) => {
+const getLearningConnections = async (user, connectionStatus) => {
     try
     {
-        let learningConnections = await LearningConnection.findAll({ where: { userId: user.id } })
+        var whereStatement = {};
+        if(user.id)
+            whereStatement.userId = user.id;
+            console.log(util.inspect(connectionStatus, {showHidden: false, depth: null}));
+        if(Object.entries(connectionStatus).length != 0)
+        {
+            whereStatement.connectionStatus = connectionStatus.status;
+        }
+
+        let learningConnections = await LearningConnection.findAll({where: whereStatement});
 
         return Promise.all(learningConnections.map(async(learningConnection) =>{
 
@@ -66,21 +74,6 @@ async function getUser(user)
     "id": user.Id,
     "name": user.firstname + " " + user.lastname,
   };
-}
-
-async function getLearningConnectionStatus(status)
-{
-  switch(status)
-  {
-    case 0:
-      return "Pending";
-    case 1:
-      return "Accepted";
-    case 2:
-      return "Rejected";
-    default:
-      return "Invalid";
-  }
 }
 
 module.exports = {

@@ -1,3 +1,4 @@
+const url = require('url')
 const { createLearningConnectionRequest, getLearningConnections } = require('../../services/learningconnection.service')
 
 /*
@@ -24,7 +25,8 @@ module.exports = {
 
 const postLearningConnection = async (req, res, next) => {
     let payload = req.body
-    try {
+    try 
+    {
         learningConnection = await createLearningConnectionRequest(req.user, payload) 
         res.json(constructLearningConnectionResponse(learningConnection));
         next()
@@ -35,7 +37,8 @@ const postLearningConnection = async (req, res, next) => {
   }
   
 const listLearningConnections = async(req, res, next) => {
-    learningConnections = await getLearningConnections(req.user)
+
+    learningConnections = await getLearningConnections(req.user, url.parse(req.url, true).query, null)
     res.json(learningConnections)
     next()
 }

@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
     },
     connectionStatus: {
-        //type: DataTypes.TINYINT, //0 - Pending, 1 - Accepted, 2 - Rejected
-        type: DataTypes.ENUM("pending", "accepted", "rejected"),
+        //type: DataTypes.TINYINT, //0 - Pending, 1 - Accepted, 2 - Rejected, 3 - Cancelled, 4 - Deleted
+        type: DataTypes.ENUM("pending", "accepted", "rejected", "cancelled", "deleted"),
     },
     acceptanceRejectionDate: {
         type: DataTypes.DATE,

@@ -6,6 +6,7 @@ const swaggerDocument = YAML.load('./Docs/swagger.yaml');
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-router.use("/api", require("./api"));
+
+//router.use("/api/", require("./api"));
 
 module.exports = router;

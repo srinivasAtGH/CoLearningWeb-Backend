@@ -210,7 +210,7 @@ paths:
   /register:
     post:
       responses:
-        "201":
+        "200":
           description: User successfully created.
       summary: Creates a new user
       operationId: create_user
@@ -353,6 +353,11 @@ paths:
           type: string
           format: mask
           description: An optional fields mask
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: "#/definitions/Getusers request data model"
       tags:
         - Users
   /users/verified:
@@ -618,17 +623,6 @@ definitions:
         description: User's new password
     type: object
   User registration model:
-    username: newUser.username,
-    hash: hash,
-    salt: salt,
-    email: newUser.email,
-    isguide: newUser.available_to_mentor,
-    islearner: newUser.need_mentoring,
-    iscolearner: newUser.need_colearner,
-    istermsandconditionschecked: newUser.terms_and_conditions_checked,
-    emailverified: true,
-    gender: newUser.gender,
-
     required:
       - username
       - email
@@ -638,6 +632,7 @@ definitions:
       - available_to_mentor
       - need_mentoring
       - need_colearner
+      - skill_to_guide
 
     properties:
       username:
@@ -661,6 +656,15 @@ definitions:
       terms_and_conditions_checked:
         type: boolean
         description: User check Terms and Conditions value
+      gender:
+        type: string
+        description: gender
+      skill_to_guide:
+        type: string
+        description: Skill that you can guide.
+      skill_to_learn:
+        type: string
+        description: Skill that you want to learn.
     type: object
   Resend email request data model:
     required:
@@ -669,6 +673,14 @@ definitions:
       email:
         type: string
         description: User's email
+    type: object
+  Getusers request data model:
+    required:
+      - skill
+    properties:
+      skillname:
+        type: string
+        description: skill to filter
     type: object
   Login request data model:
     required:

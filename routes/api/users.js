@@ -5,6 +5,7 @@ const { User, Skill, UserSkills } = require("../../models/sequelize");
 const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const Language = require("../../models/Language");
 
 var secret = require("../../config").secret;
 
@@ -119,7 +120,7 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/users", auth, (req, res) => {
-  const filter = req.body.filter;
+  const filter = req.body;
 
   User.findAll({
     include: [
@@ -141,9 +142,11 @@ router.get("/users/:id", auth, (req, res) => {
     where: { id: req.params.id },
     include: [
       {
-        model: Skill,
-        attributes: ["skillname"],
-        through: { attributes: ["skilltype"] },
+        all: true,
+        nested: true,
+        // model: Skill,
+        // attributes: ["skillname"],
+        // through: { attributes: ["skilltype"] },
       },
     ],
   }).then((user) => {

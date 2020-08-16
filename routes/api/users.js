@@ -1,9 +1,11 @@
-var auth = require("../auth");
-var router = require("express").Router();
-var { User, Skill, UserSkills } = require("../../models/sequelize");
-
+const auth = require("../auth");
+const Sequelize = require("sequelize");
+const router = require("express").Router();
+const { User, Skill, UserSkills } = require("../../models/sequelize");
+const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const Language = require("../../models/Language");
 
 var secret = require("../../config").secret;
 
@@ -42,7 +44,7 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.json({ user: {access_token: token, username: user.username}});
+      res.json({ user: { access_token: token, username: user.username } });
     }
   });
 });
@@ -118,7 +120,21 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/users", auth, (req, res) => {
-  User.findAll().then((users) => res.json(users));
+  const filter = req.body;
+
+  User.findAll({
+    include: [
+      {
+        model: Skill,
+        where: { skillname: { [Op.substring]: filter.skill } },
+        attributes: ["skillname"],
+        through: {
+          attributes: ["skilltype"],
+          // where: { skilltype: filter.learningtype },
+        },
+      },
+    ],
+  }).then((users) => res.json(users));
 });
 
 router.get("/users/:id", auth, (req, res) => {
@@ -126,16 +142,43 @@ router.get("/users/:id", auth, (req, res) => {
     where: { id: req.params.id },
     include: [
       {
-        model: Skill,
-        attributes: ["skillname"],
-        through: { attributes: ["skilltype"] },
+        all: true,
+        nested: true,
+        // model: Skill,
+        // attributes: ["skillname"],
+        // through: { attributes: ["skilltype"] },
       },
     ],
   }).then((user) => {
     if (!user) {
       return res.status(404).json({ message: "User does not exist." });
     }
-
+    // const resultUser = {
+    //   username: user.username,
+    //   email: user.email,
+    //   isguide: user.isguide,
+    //   islearner: user.islearner,
+    //   iscolearner: user.iscolearner,
+    //   photo: user.photo,
+    //   bio: user.bio,
+    //   phonenumber: user.phonenumber,
+    //   phonenumberprivacy: user.phonenumberprivacy,
+    //   whatsappnumber: user.whatsappnumber,
+    //   whatsappnumberprivacy: user.whatsappnumberprivacy,
+    //   country: user.country,
+    //   state: user.state,
+    //   city: user.city,
+    //   firstname: user.firstname,
+    //   lastname: user.lastname,
+    //   gender: user.gender == 1 ? "male" : "female",
+    //   occupation: user.occupation,
+    //   skills: user.skills.map((skill) => {
+    //     return {
+    //       skillname: skill.skillname,
+    //       skilltype: skill.UserSkills.skilltype,
+    //     };
+    //   }),
+    // };
     res.json(user);
   });
 });

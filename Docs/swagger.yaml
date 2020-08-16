@@ -1,13 +1,13 @@
-swagger: '2.0'
+swagger: "2.0"
 basePath: /api
 paths:
   /login:
     post:
       responses:
-        '200':
+        "200":
           description: Successful login
           schema:
-            $ref: '#/definitions/Login response data model'
+            $ref: "#/definitions/Login response data model"
       summary: Login user
       description: |-
         The user can login with username + password.
@@ -19,15 +19,15 @@ paths:
           required: true
           in: body
           schema:
-            $ref: '#/definitions/Login request data model'
+            $ref: "#/definitions/Login request data model"
       tags:
         - Users
   /learning_connection/send_request:
     post:
       responses:
-        '200':
+        "200":
           description: Learning Connection request was sent successfully.
-        '400':
+        "400":
           description: Validation error.
       summary: Creates a new learning connection request
       operationId: send_request
@@ -36,15 +36,15 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: payload
           required: true
           in: body
           schema:
-            $ref: '#/definitions/Send learning connection request model'
+            $ref: "#/definitions/Send learning connection request model"
       tags:
         - Learning Connection
-  '/learning_connection/{request_id}':
+  "/learning_connection/{request_id}":
     parameters:
       - name: request_id
         in: path
@@ -52,7 +52,7 @@ paths:
         type: integer
     delete:
       responses:
-        '200':
+        "200":
           description: Deleted learning connection request with success.
       summary: Delete a learning connection request
       operationId: delete_learning_connection
@@ -61,10 +61,10 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Learning Connection
-  '/learning_connection/{request_id}/accept':
+  "/learning_connection/{request_id}/accept":
     parameters:
       - name: request_id
         in: path
@@ -77,7 +77,7 @@ paths:
           $ref: '#/definitions/Accept Reject Notes model'
     put:
       responses:
-        '200':
+        "200":
           description: Accept learning connection with success.
       summary: Accept a learning connection
       operationId: accept_mentorship_relation
@@ -86,10 +86,10 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Learning Connection
-  '/learning_connection/{request_id}/cancel':
+  "/learning_connection/{request_id}/cancel":
     parameters:
       - name: request_id
         in: path
@@ -97,7 +97,7 @@ paths:
         type: integer
     put:
       responses:
-        '200':
+        "200":
           description: Cancelled learning connection with success.
       summary: Cancel a learning connection
       operationId: cancel_learning_connection
@@ -106,10 +106,10 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Learning Connection
-  '/learning_connection/{request_id}/reject':
+  "/learning_connection/{request_id}/reject":
     parameters:
       - name: request_id
         in: path
@@ -122,7 +122,7 @@ paths:
           $ref: '#/definitions/Accept Reject Notes model'
     put:
       responses:
-        '200':
+        "200":
           description: Rejected learning connection with success.
       summary: Reject a learning connection
       operationId: reject_learning_connection
@@ -131,16 +131,16 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Learning Connection
   /learning_connections:
     get:
       responses:
-        '200':
+        "200":
           description: Successfully return current user's learning connections.
           schema:
-            $ref: '#/definitions/List learning connection request model'
+            $ref: "#/definitions/List learning connection request model"
       summary: Lists all learning connections of current user
       operationId: get_all_user_learning_connections
       parameters:
@@ -148,29 +148,60 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
-        - name: status
-          in: query
-          required: false
-          description: status values of the learning connection to be considered for filter
-          type: "array"
-          items:
-            type: "string"
-            enum:
-            - "pending"
-            - "accepted"
-            - "rejected"
-            default: "pending"
-          collectionFormat: "multi"
+          description: "Authentication access token. E.g.: Bearer <access_token>"
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
       tags:
         - Learning Connection
-  '/learning_connections/{learning_connection_id}':
+  /learning_connections/current:
     get:
       responses:
-        '200':
+        "200":
+          description: Successfully return current user's current learning connections.
+          schema:
+            $ref: "#/definitions/List learning connection request model"
+      summary: Lists  of the current user
+      operationId: get_current_learning_connections
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: "Authentication access token. E.g.: Bearer <access_token>"
+      tags:
+        - Learning Connection
+  /learning_connections/pending:
+    get:
+      responses:
+        "200":
+          description: Returned pending learning conenction with success.
+          schema:
+            $ref: "#/definitions/List learning connection request model"
+      summary: Lists pending learning connections of the current user
+      operationId: get_pending_learning_connections
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+          description: "Authentication access token. E.g.: Bearer <access_token>"
+        - name: X-Fields
+          in: header
+          type: string
+          format: mask
+          description: An optional fields mask
+      tags:
+        - Learning Connection
+  "/learning_connections/{learning_connection_id}":
+    get:
+      responses:
+        "200":
           description: Successfully return details of a learning connection.
           schema:
-            $ref: '#/definitions/List learning connection request model'
+            $ref: "#/definitions/List learning connection request model"
       summary: Get details of a learning connection
       operationId: get_learning_connection_details
       parameters:
@@ -178,7 +209,7 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: X-Fields
           in: header
           type: string
@@ -189,7 +220,7 @@ paths:
   /register:
     post:
       responses:
-        '201':
+        "200":
           description: User successfully created.
       summary: Creates a new user
       operationId: create_user
@@ -198,17 +229,17 @@ paths:
           required: true
           in: body
           schema:
-            $ref: '#/definitions/User registration model'
+            $ref: "#/definitions/User registration model"
       tags:
         - Users
   /user:
     get:
       responses:
-        '200':
+        "200":
           description: Success
           schema:
-            $ref: '#/definitions/User Complete model used in listing'
-        '404':
+            $ref: "#/definitions/User Complete model used in listing"
+        "404":
           description: User not found.
       summary: Returns a user
       operationId: get_user
@@ -217,7 +248,7 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: X-Fields
           in: header
           type: string
@@ -227,9 +258,9 @@ paths:
         - Users
     delete:
       responses:
-        '200':
+        "200":
           description: User successfully deleted.
-        '404':
+        "404":
           description: User not found.
       summary: Deletes user
       operationId: delete_user
@@ -238,14 +269,14 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Users
     put:
       responses:
-        '200':
+        "200":
           description: User successfully updated.
-        '404':
+        "404":
           description: User not found.
       summary: Updates user profile
       operationId: update_user_profile
@@ -254,18 +285,18 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: payload
           required: true
           in: body
           schema:
-            $ref: '#/definitions/Update User request data model'
+            $ref: "#/definitions/Update User request data model"
       tags:
         - Users
   /user/change_password:
     put:
       responses:
-        '200':
+        "200":
           description: Success
       summary: Updates the user's password
       operationId: update_user_password
@@ -274,15 +305,15 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: payload
           required: true
           in: body
           schema:
-            $ref: '#/definitions/Change password request data model'
+            $ref: "#/definitions/Change password request data model"
       tags:
         - Users
-  '/user/confirm_email/{token}':
+  "/user/confirm_email/{token}":
     parameters:
       - in: path
         description: Token sent to the user's email
@@ -291,7 +322,7 @@ paths:
         type: string
     get:
       responses:
-        '200':
+        "200":
           description: Success
       operationId: get_user_email_confirmation
       tags:
@@ -299,7 +330,7 @@ paths:
   /user/resend_email:
     post:
       responses:
-        '200':
+        "200":
           description: Success
       operationId: post_user_resend_email_confirmation
       parameters:
@@ -307,18 +338,18 @@ paths:
           required: true
           in: body
           schema:
-            $ref: '#/definitions/Resend email request data model'
+            $ref: "#/definitions/Resend email request data model"
       tags:
         - Users
   /users:
     get:
       responses:
-        '200':
+        "200":
           description: Success
           schema:
             type: array
             items:
-              $ref: '#/definitions/User list model'
+              $ref: "#/definitions/User list model"
       summary: Returns list of all the users
       operationId: list_users
       parameters:
@@ -326,23 +357,28 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: X-Fields
           in: header
           type: string
           format: mask
           description: An optional fields mask
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: "#/definitions/Getusers request data model"
       tags:
         - Users
   /users/verified:
     get:
       responses:
-        '200':
+        "200":
           description: Success
           schema:
             type: array
             items:
-              $ref: '#/definitions/User list model'
+              $ref: "#/definitions/User list model"
       summary: Returns all verified users
       operationId: get_verified_users
       parameters:
@@ -350,7 +386,7 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
         - name: X-Fields
           in: header
           type: string
@@ -358,7 +394,7 @@ paths:
           description: An optional fields mask
       tags:
         - Users
-  '/users/{user_id}':
+  "/users/{user_id}":
     parameters:
       - in: path
         description: The user identifier
@@ -367,13 +403,13 @@ paths:
         type: integer
     get:
       responses:
-        '201':
+        "200":
           description: Success.
           schema:
-            $ref: '#/definitions/User list model'
-        '400':
+            $ref: "#/definitions/User list model"
+        "400":
           description: User id is not valid.
-        '404':
+        "404":
           description: User does not exist.
       summary: Returns a user
       operationId: get_user
@@ -382,12 +418,12 @@ paths:
           in: header
           type: string
           required: true
-          description: 'Authentication access token. E.g.: Bearer <access_token>'
+          description: "Authentication access token. E.g.: Bearer <access_token>"
       tags:
         - Users
 info:
   title: CoLearning Web API
-  version: '1.0'
+  version: "1.0"
   description: API documentation for the backend of CoLearning Web System
 produces:
   - application/json
@@ -598,15 +634,17 @@ definitions:
     type: object
   User registration model:
     required:
+      - username
       - email
-      - name
       - password
       - terms_and_conditions_checked
-      - username
+      - gender
+      - available_to_mentor
+      - need_mentoring
+      - need_colearner
+      - skill_to_guide
+
     properties:
-      name:
-        type: string
-        description: User name
       username:
         type: string
         description: User username
@@ -616,9 +654,27 @@ definitions:
       email:
         type: string
         description: User email
+      available_to_mentor:
+        type: boolean
+        description: Do you want to be a mentor/guide?
+      need_mentoring:
+        type: boolean
+        description: Are you a leaner?
+      need_colearner:
+        type: boolean
+        description: Are you a co-leaner?
       terms_and_conditions_checked:
         type: boolean
         description: User check Terms and Conditions value
+      gender:
+        type: string
+        description: gender
+      skill_to_guide:
+        type: string
+        description: Skill that you can guide.
+      skill_to_learn:
+        type: string
+        description: Skill that you want to learn.
     type: object
   Resend email request data model:
     required:
@@ -627,6 +683,14 @@ definitions:
       email:
         type: string
         description: User's email
+    type: object
+  Getusers request data model:
+    required:
+      - skill
+    properties:
+      skillname:
+        type: string
+        description: skill to filter
     type: object
   Login request data model:
     required:
@@ -708,9 +772,9 @@ definitions:
         type: integer
         description: Learning Connection requester user ID
       mentor:
-        $ref: '#/definitions/User'
+        $ref: "#/definitions/User"
       mentee:
-        $ref: '#/definitions/User'
+        $ref: "#/definitions/User"
       creation_date:
         type: number
         description: Learning Connection creation date in UNIX timestamp format

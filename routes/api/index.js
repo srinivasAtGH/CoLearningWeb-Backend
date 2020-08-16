@@ -2,6 +2,8 @@ var router = require("express").Router();
 
 router.use("/", require("./users"));
 router.use("/", require("./learningconnections"));
+router.use("/", require("./skills"));
+router.use("/", require("./languages"));
 
 router.use(function (err, req, res, next) {
   if (err.name === "ValidationError") {

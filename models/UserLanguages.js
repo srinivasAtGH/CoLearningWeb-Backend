@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes, User, Skill) => {
-  var UserSkills = sequelize.define("UserSkills", {
+  var UserSkills = sequelize.define("UserLanguages", {
     Id: {
       field: "id",
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    skilltype: DataTypes.ENUM("guide", "learner"),
+    Description: DataTypes.STRING,
   });
   return UserSkills;
 };

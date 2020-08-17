@@ -21,7 +21,7 @@ const createLearningConnectionRequest = async (user, payload) => {
     learningConnection.skillFluency = payload.request.skillFluency;
     learningConnection.timeCommitment = payload.request.timeCommitment;
     learningConnection.personalNoteRequest = payload.request.personalNoteRequest;
-    learningConnection.actionUserId = user.Id;
+    learningConnection.actionUserId = user.id;
     learningConnection.connectionType = payload.request.connectionType;
     learningConnection.connectionStatus = "pending";
     learningConnection.dateOfRequest = Date();

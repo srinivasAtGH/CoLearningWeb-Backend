@@ -7,6 +7,14 @@ module.exports = (sequelize, DataTypes, User, Skill) => {
       autoIncrement: true,
     },
     skilltype: DataTypes.ENUM("guide", "learner"),
+    userId: {
+      field: "userId",
+      type: DataTypes.INTEGER,
+    },
+    skillId: {
+      field: "skillId",
+      type: DataTypes.INTEGER,
+    }
   });
   return UserSkills;
 };

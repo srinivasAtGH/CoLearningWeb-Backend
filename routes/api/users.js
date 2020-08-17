@@ -212,7 +212,7 @@ router.put("/changepassword", auth, (req, res) => {
 
 router.put("/users/:id", auth, (req, res) => {
   const updatedUser = req.body;
-  User.findOne({ where: { id: req.params.id } }).then((user) => {
+  User.findOne({ where: { id: req.user.id } }).then((user) => {
     if (updatedUser.bio !== undefined) {
       user.bio = updatedUser.bio;
     }

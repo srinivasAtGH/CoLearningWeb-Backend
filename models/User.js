@@ -42,27 +42,23 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     email: DataTypes.STRING,
     emailprivacy: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: true,
     },
     phonenumber: DataTypes.STRING,
     phonenumberprivacy: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: true,
     },
     whatsappnumber: DataTypes.STRING,
     whatsappnumberprivacy: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: true,
     },
-    connectionprivacy: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
+
     birthdate: DataTypes.DATE,
     gender: {
       type: DataTypes.ENUM("male", "female"),
@@ -95,6 +91,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    },
+
+    languages: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    guidingSkills: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    learningSkills: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   });
 

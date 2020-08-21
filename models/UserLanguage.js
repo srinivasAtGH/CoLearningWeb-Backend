@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  var Language = sequelize.define("Language", {
+  var Language = sequelize.define("UserLanguage", {
     Id: {
       field: "id",
       type: DataTypes.INTEGER,

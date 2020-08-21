@@ -2,17 +2,13 @@ const Sequelize = require("sequelize");
 const UserModel = require("./User");
 const LearningConnectionModel = require("./LearningConnection");
 const SkillModel = require("./Skill");
-const LanguageModel = require("./Language");
-const UserSkillsModel = require("./UserSkills");
-const UserLanguagesModel = require("./UserLanguages");
+// const UserSkillModel = require("./UserSkill");
+// const UserLanguageModel = require("./UserLanguage");
 
 var sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "colearningweb.sqlite",
 });
-
-const Language = LanguageModel(sequelize, Sequelize);
-console.log("Language: " + Language);
 
 const Skill = SkillModel(sequelize, Sequelize);
 console.log("skill: " + Skill);
@@ -23,20 +19,17 @@ console.log("User: " + User);
 const LearningConnection = LearningConnectionModel(sequelize, Sequelize);
 console.log("LearningConnection: " + LearningConnection);
 
-const UserSkills = UserSkillsModel(sequelize, Sequelize, User, Skill);
-console.log("UserSkills: " + UserSkills);
+// const UserSkill = UserSkillModel(sequelize, Sequelize);
+// console.log("UserSkill: " + UserSkill);
 
-const UserLanguages = UserLanguagesModel(sequelize, Sequelize, User, Language);
-console.log("UserLanguages: " + UserLanguages);
+// const UserLanguage = UserLanguageModel(sequelize, Sequelize);
+// console.log("UserLanguage: " + UserLanguage);
 
-User.belongsToMany(Skill, { through: UserSkills });
-Skill.belongsToMany(User, { through: UserSkills });
-
-User.belongsToMany(Language, { through: UserLanguages });
-Language.belongsToMany(User, { through: UserLanguages });
+// User.hasMany(UserLanguage);
+// User.hasMany(UserSkill);
 
 sequelize.sync({ force: false }).then(() => {
   console.log(`Database & tables created!`);
 });
 
-module.exports = { User, Skill, UserSkills, LearningConnection, Language };
+module.exports = { User, Skill, LearningConnection };

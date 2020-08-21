@@ -6,13 +6,16 @@ const app = express();
 const bodyparser = require("body-parser");
 const crypto = require("crypto");
 
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./Docs/swagger.yaml');
+
 app.use(bodyparser.json());
 app.use(cors());
-var users = require("./routes/api/users.js");
-var learningconnections = require("./routes/api/learningconnections.js");
-//var skills = require("./routes/api/skills.js");
 
-app.use(require("./routes"));
+app.use("/api/", require('./routes/api'));
+app.use('/api-docs', swaggerUi.serve);
+app.use('/api-docs', swaggerUi.setup(swaggerDocument));
 
 app.listen(3100, () => {
   console.log("Server listening at 3100 ...");

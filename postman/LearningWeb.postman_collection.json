@@ -106,11 +106,81 @@
 		},
 		{
 			"name": "Get Learning Collections",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYmd1cmF2IiwiZXhwIjoxNjAyMDcwNjA2LCJpYXQiOjE1OTY4ODY2MDZ9.dzEh8e9UzzxGqJdGU10oyu5oATyNe9dqh5_jmRhOW8U",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3100/api/learning_connections",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3100",
+					"path": [
+						"api",
+						"learning_connections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Learning Collection Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYmd1cmF2IiwiZXhwIjoxNjAyMDcwNjA2LCJpYXQiOjE1OTY4ODY2MDZ9.dzEh8e9UzzxGqJdGU10oyu5oATyNe9dqh5_jmRhOW8U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3100/api/learning_connections/7",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3100",
+					"path": [
+						"api",
+						"learning_connections",
+						"7"
+					]
 				}
 			},
 			"response": []
@@ -160,6 +230,98 @@
 		},
 		{
 			"name": "Get User Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Learning Connection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept Learning Connection",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYmd1cmF2IiwiZXhwIjoxNjAyMDcwNjA2LCJpYXQiOjE1OTY4ODY2MDZ9.dzEh8e9UzzxGqJdGU10oyu5oATyNe9dqh5_jmRhOW8U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3100/api/learning_connection/5/accept",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3100",
+					"path": [
+						"api",
+						"learning_connection",
+						"5",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Learning Connection Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYmd1cmF2IiwiZXhwIjoxNjAyMDcwNjA2LCJpYXQiOjE1OTY4ODY2MDZ9.dzEh8e9UzzxGqJdGU10oyu5oATyNe9dqh5_jmRhOW8U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3100/api/learning_connection/5/accept",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3100",
+					"path": [
+						"api",
+						"learning_connection",
+						"5",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reject Learning Connection",
 			"request": {
 				"method": "GET",
 				"header": [],

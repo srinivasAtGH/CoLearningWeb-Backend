@@ -70,6 +70,11 @@ paths:
         in: path
         required: true
         type: integer
+      - name: notes
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/Accept Reject Notes model'
     put:
       responses:
         "200":
@@ -110,6 +115,11 @@ paths:
         in: path
         required: true
         type: integer
+      - name: notes
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/Accept Reject Notes model'
     put:
       responses:
         "200":
@@ -784,6 +794,13 @@ definitions:
         type: string
         description: Learner Skill name
     type: object
+  Accept Reject Notes model:
+    required:
+      - notes
+    properties:
+      notes:
+        type: string
+        description: Personal note while accepting or rejecting request
 responses:
   ParseError:
     description: When a mask can't be parsed

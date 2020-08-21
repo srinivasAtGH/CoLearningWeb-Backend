@@ -1,4 +1,4 @@
-var router = require("express").Router();
+var router = require("express").Router({mergeParams: true});
 
 router.use("/", require("./users"));
 router.use("/", require("./learningconnections"));

@@ -92,17 +92,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false,
     },
-
     languages: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-
     guidingSkills: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-
     learningSkills: {
       type: DataTypes.STRING,
       allowNull: true,

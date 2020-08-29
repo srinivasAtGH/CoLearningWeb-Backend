@@ -87,19 +87,29 @@ router.post("/register", (req, res) => {
 router.get("/users", auth, (req, res) => {
   const filter = req.body;
 
-  User.findAll({
-    include: [
-      {
-        model: Skill,
-        where: { skillname: { [Op.substring]: filter.skill } },
-        attributes: ["skillname"],
-        through: {
-          attributes: ["skilltype"],
-          // where: { skilltype: filter.learningtype },
+  var whereStatement = {};
+  if (filter.skill) 
+  {
+    var whereStatement = 
+    { 
+      [Op.or]: [ 
+        { 
+          guidingSkills: {
+            [Op.like]: '%' + filter.skill + '%'
+            },
         },
-      },
-    ],
-  }).then((users) => res.json(users));
+        { 
+          learningSkills: {
+            [Op.like]: '%' + filter.skill + '%'
+            },
+        },
+      ]
+    }
+  }
+  console.log(whereStatement);
+
+  User.findAll({where: whereStatement, logging: console.log}
+  ).then((users) => res.json(users));
 });
 
 router.get("/users/:id", auth, (req, res) => {

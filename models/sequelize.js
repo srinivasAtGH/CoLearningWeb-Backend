@@ -8,6 +8,7 @@ const SkillModel = require("./Skill");
 var sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "colearningweb.sqlite",
+  logging: console.log,
 });
 
 const Skill = SkillModel(sequelize, Sequelize);

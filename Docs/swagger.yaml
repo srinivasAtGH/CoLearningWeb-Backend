@@ -149,11 +149,20 @@ paths:
           type: string
           required: true
           description: "Authentication access token. E.g.: Bearer <access_token>"
-        - name: X-Fields
-          in: header
-          type: string
-          format: mask
-          description: An optional fields mask
+        - name: "status"
+          in: "query"
+          description: "Status values that need to be considered for filter"
+          required: false
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "pending"
+            - "accepted"
+            - "rejected"
+            - "cancelled"
+          default: "pending"
+          collectionFormat: "multi"
       tags:
         - Learning Connection
   /learning_connections/current:

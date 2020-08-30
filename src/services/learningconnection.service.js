@@ -1,4 +1,6 @@
 "use strict";
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 var {
   LearningConnection,
   User,
@@ -6,6 +8,7 @@ var {
   Skill,
 } = require("../../models/sequelize");
 var util = require("util");
+const { use } = require("../../routes/api/users");
 
 const createLearningConnectionRequest = async (user, payload) => {
   try {
@@ -31,17 +34,42 @@ const createLearningConnectionRequest = async (user, payload) => {
 
 const getLearningConnections = async (user, connectionStatus) => {
   try {
-    var whereStatement = {};
-    if (user.id) whereStatement.userId = user.id;
+    var condition_userorpartner = {}
+    var whereCondition = {}
+    
+    if(user.id)
+    {
+      condition_userorpartner = { 
+
+        [Op.or]: [ 
+          { 
+            userId: {
+              [Op.eq]: user.id
+              },
+          },
+          { 
+            partnerId: {
+              [Op.eq]: user.id
+              },
+          },
+        ]
+      }
+    } 
+
     console.log(
       util.inspect(connectionStatus, { showHidden: false, depth: null })
     );
     if (Object.entries(connectionStatus).length != 0) {
-      whereStatement.connectionStatus = connectionStatus.status;
+      //whereStatement.connectionStatus = connectionStatus.status;
+      whereCondition = Sequelize.and(condition_userorpartner, {connectionStatus: connectionStatus.status});
+    }
+    else
+    {
+      whereCondition = condition_userorpartner;
     }
 
     let learningConnections = await LearningConnection.findAll({
-      where: whereStatement,
+      where: whereCondition,
     });
 
     return Promise.all(

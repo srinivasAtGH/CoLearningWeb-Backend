@@ -44,7 +44,7 @@ router.post("/login", (req, res) => {
         secret
       );
       res.json({
-        user: { access_token: token, username: user.username, userid: user.id },
+        user: { access_token: token, username: user.username, userid: user.Id },
       });
     }
   });

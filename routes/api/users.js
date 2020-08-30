@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.json({ user: { access_token: token, username: user.username } });
+      res.json({ user: { access_token: token, username: user.username, id:user.Id } });
     }
   });
 });

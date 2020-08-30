@@ -43,7 +43,9 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.json({ user: { access_token: token, username: user.username, id:user.Id } });
+      res.json({
+        user: { access_token: token, username: user.username, userid: user.id },
+      });
     }
   });
 });
@@ -88,28 +90,27 @@ router.get("/users", auth, (req, res) => {
   const filter = req.body;
 
   var whereStatement = {};
-  if (filter.skill) 
-  {
-    var whereStatement = 
-    { 
-      [Op.or]: [ 
-        { 
+  if (filter.skill)
+    var whereStatement = {
+      [Op.or]: [
+        {
           guidingSkills: {
-            [Op.like]: '%' + filter.skill + '%'
-            },
+            [Op.like]: "%" + filter.skill + "%",
+          },
         },
-        { 
+        {
           learningSkills: {
-            [Op.like]: '%' + filter.skill + '%'
-            },
+            [Op.like]: "%" + filter.skill + "%",
+          },
         },
-      ]
-    }
-  }
+      ],
+    };
+
   console.log(whereStatement);
 
-  User.findAll({where: whereStatement, logging: console.log}
-  ).then((users) => res.json(users));
+  User.findAll({ where: whereStatement, logging: console.log }).then((users) =>
+    res.json(users)
+  );
 });
 
 router.get("/users/:id", auth, (req, res) => {

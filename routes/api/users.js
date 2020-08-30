@@ -43,7 +43,9 @@ router.post("/login", (req, res) => {
         },
         secret
       );
-      res.json({ user: { access_token: token, username: user.username } });
+      res.json({
+        user: { access_token: token, username: user.username, userid: user.id },
+      });
     }
   });
 });
@@ -88,17 +90,7 @@ router.get("/users", auth, (req, res) => {
   const filter = req.body;
 
   User.findAll({
-    include: [
-      {
-        model: Skill,
-        where: { skillname: { [Op.substring]: filter.skill } },
-        attributes: ["skillname"],
-        through: {
-          attributes: ["skilltype"],
-          // where: { skilltype: filter.learningtype },
-        },
-      },
-    ],
+    where: { guidingskills: { [Op.substring]: filter.guidingSkill } },
   }).then((users) => res.json(users));
 });
 

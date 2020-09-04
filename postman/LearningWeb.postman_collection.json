@@ -219,11 +219,45 @@
 		},
 		{
 			"name": "List Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJwYmd1cmF2IiwiZXhwIjoxNjAxNDY1NzI0LCJpYXQiOjE1OTYyODE3MjR9.wagYKCuGR8DmUj_K0o_YrnJO3OCCSNNVzD0-wIEmPpI",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"skill\" : \"coding\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "http://127.0.0.1:3100/api/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3100",
+					"path": [
+						"api",
+						"users"
+					]
 				}
 			},
 			"response": []

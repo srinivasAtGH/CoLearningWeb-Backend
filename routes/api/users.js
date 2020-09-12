@@ -5,6 +5,7 @@ const { User, Skill } = require("../../models/sequelize");
 const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const url = require('url');
 
 var secret = require("../../config").secret;
 
@@ -87,7 +88,7 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/users", auth, (req, res) => {
-  const filter = req.body;
+  const filter = url.parse(req.url, true).query;
 
   var whereStatement = {};
   if (filter.skill)

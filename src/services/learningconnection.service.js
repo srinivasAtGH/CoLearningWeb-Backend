@@ -119,8 +119,30 @@ async function getUser(user) {
 const getLearningConnectionDetailsSvc = async (user, id) => {
 
   var whereStatement = {};
-  if(user.id) whereStatement.userId = user.id;
-  if(id) whereStatement.id = id;
+  //if(user.id) whereStatement.userId = user.id;
+  //if(id) whereStatement.id = id;
+
+
+  if(user.id)
+    {
+      whereStatement = { 
+
+        [Op.or]: [ 
+          { 
+            userId: {
+              [Op.eq]: user.id
+              },
+          },
+          { 
+            partnerId: {
+              [Op.eq]: user.id
+              },
+          },
+        ]
+      }
+    }
+
+    whereStatement = Sequelize.and(whereStatement, {id: id});  
 
   let learningConnection = await LearningConnection.findOne({where: whereStatement});
 

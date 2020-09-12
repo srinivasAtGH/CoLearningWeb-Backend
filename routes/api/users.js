@@ -67,10 +67,12 @@ router.post("/register", (req, res) => {
     islearner: newUser.need_mentoring,
     iscolearner: newUser.need_colearner,
     istermsandconditionschecked: newUser.terms_and_conditions_checked,
-    emailverified: true,
     gender: newUser.gender,
     guidingSkills: newUser.guidingskills,
     learningSkills: newUser.learningskills,
+    firstname: newUser.firstname,
+    lastname: newUser.lastname,
+    phonenumber: newUser.phonenumber,
   })
     .then((user) => {
       return res.json({
@@ -79,6 +81,7 @@ router.post("/register", (req, res) => {
       });
     })
     .catch((response) => {
+      console.log(response);
       res.status(422).json({
         errors: response.errors.map((error) => {
           return error.message;
